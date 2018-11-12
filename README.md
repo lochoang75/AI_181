@@ -1,5 +1,5 @@
 # AI_181
-## Desciption
+## Description
 This is Artificial Intelligence - AI 2018/181 Assignment.
 ## File and structure
 1. Main.py formain fuction and state.
