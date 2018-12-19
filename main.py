@@ -27,6 +27,7 @@ def board_copy(board):
 
 # Student SHOULD implement this function to change current state to new state properly
 def doit(move, state):
+    
     new_state = board_copy(state)
     return new_state
 
