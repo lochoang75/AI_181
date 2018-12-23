@@ -36,11 +36,11 @@ class Player:
     def __str__(self):
         return self.str
 
-    def __enermy__(self):
+    def enermy(self):
         if self.str == "r":
-            self.enermy = "b"
+            return "b"
         else:
-            self.enermy = "r"
+            return "r"
 
     """ Evaluated function of state"""
     def evaluated_function(self, state):
@@ -50,6 +50,7 @@ class Player:
                 if self.str == state[row][col]:
                     count+=1
         return count
+
     """ Move chess to clear position """
     def move(self, state, current, new):
         cur_x = current[0]
@@ -65,7 +66,11 @@ class Player:
     def OneForTwo (self, state, position):
         # Check and change the chessman color 
         # ? self.str ?
-        if state[position[0]] == self.enermy and state[position[1]] == self.enermy:
+        first_chess_row = position[0][0]
+        first_chess_col = position[0][1]
+        second_chess_row = position[1][0] 
+        second_chess_col = position[1][1]
+        if state[first_chess_row][first_chess_col] == self.enermy() and state[second_chess_row][second_chess_col] == self.enermy():
             return True
         else:
             return False
@@ -73,8 +78,10 @@ class Player:
     """Two for one"""
     def TwoForOne (self, state, position):
         # Check and change the chessman color
-        # self.str self.enermy ?
-        if state[position] == self.str:
+        # self.str self.enermy() ?
+        row = position[0][0]
+        col = position[0][1]
+        if state[row][col] == self.str:
             return True 
         else:
             return False 
@@ -87,7 +94,7 @@ class Player:
             # ? x x
             # x * x
             # x x ?
-            if state[row + 1][col - 1] == self.enermy:
+            if state[row + 1][col - 1] == self.enermy():
                 unknow_post = [(row + 1, col - 1), (row - 1, col + 1)]
                 if self.OneForTwo(state, unknow_post):
                     state[row + 1][col - 1] = self.str
@@ -105,7 +112,7 @@ class Player:
             # x ? x
             # x * x
             # x ? x
-            if state[row + 1][col] == self.enermy:
+            if state[row + 1][col] == self.enermy():
                 unknow_post = [(row + 1, col), (row - 1, col)]
                 if self.OneForTwo(state, unknow_post):
                     state[row + 1][col] = self.str
@@ -123,7 +130,7 @@ class Player:
             # x x ?
             # x * x
             # ? x x
-            if state[row + 1][col + 1] == self.enermy:
+            if state[row + 1][col + 1] == self.enermy():
                 unknow_post = [(row + 1, col + 1), (row - 1, col - 1)]
                 if self.OneForTwo(state, unknow_post):
                     state[row + 1][col + 1] = self.str
@@ -141,7 +148,7 @@ class Player:
             # x x x
             # ? * ?
             # x x x
-            if state[row][col + 1] == self.enermy:
+            if state[row][col + 1] == self.enermy():
                 unknow_post = [(row, col + 1), (row, col - 1)]
                 if self.OneForTwo(state, unknow_post) :
                     state[row][col + 1] = self.str
@@ -159,7 +166,7 @@ class Player:
             # x x x
             # x * x
             # x x ?
-            if state[row - 1][col + 1] == self.enermy:
+            if state[row - 1][col + 1] == self.enermy():
                 # b x x
                 # x r x
                 # x x ?
@@ -173,7 +180,7 @@ class Player:
             # x x x
             # x * x
             # x ? x
-            if state[row - 1][col] == self.enermy:
+            if state[row - 1][col] == self.enermy():
                 # x b x
                 # x r x
                 # x ? x
@@ -187,7 +194,7 @@ class Player:
             # x x x
             # x * x
             # ? x x
-            if state[row - 1][col - 1] == self.enermy:
+            if state[row - 1][col - 1] == self.enermy():
                 # x x b
                 # x r x
                 # ? x x
@@ -201,7 +208,7 @@ class Player:
             # x x x
             # ? * x
             # x x x
-            if state[row][col - 1] == self.enermy:
+            if state[row][col - 1] == self.enermy():
                 # x x x
                 # ? r b
                 # x x x
@@ -224,7 +231,7 @@ class Player:
                 #| b r ?
                 #| x x x
                 #| x x x
-                if state[row][col + 1] == self.enermy:
+                if state[row][col + 1] == self.enermy():
                     if self.TwoForOne(state, (row, col + 2)):
                         # b r b
                         # x x x
@@ -234,7 +241,7 @@ class Player:
                 #| b x x
                 #| x r x
                 #| x x ?
-                if state[row - 1][col +1] == self.enermy:
+                if state[row - 1][col +1] == self.enermy():
                     if self.TwoForOne(state, (row - 2, col + 2)):
                         # b x x
                         # x r x
@@ -245,7 +252,7 @@ class Player:
                 #| b x x
                 #| r x x
                 #| ? x x
-                if state[row - 1][col] == self.enermy:
+                if state[row - 1][col] == self.enermy():
                     if self.TwoForOne(state, (row - 2, col)):
                         # b x x
                         # r x x
@@ -261,7 +268,7 @@ class Player:
                 # ? r b|
                 # x x x|
                 # x x x|
-                if state[row][col - 1] == self.enermy:
+                if state[row][col - 1] == self.enermy():
                     if self.TwoForOne(state, (row, col - 2)):
                         # b r b
                         # x x x
@@ -271,7 +278,7 @@ class Player:
                 # x x b|
                 # x r x|
                 # ? x x|
-                if state[row - 1][col - 1] == self.enermy:
+                if state[row - 1][col - 1] == self.enermy():
                     if self.TwoForOne(state, (row - 2, col - 2)):
                         # x x b
                         # x r x
@@ -281,7 +288,7 @@ class Player:
                 # x x b|
                 # x x r|
                 # x x ?|
-                if state[row - 1][col] == self.enermy:
+                if state[row - 1][col] == self.enermy():
                     if self.TwoForOne(state, (row - 2, col)):
                         # x x b
                         # x x r
@@ -297,7 +304,7 @@ class Player:
                 # r * ?
                 # x x x
                 # x x x
-                if state[row][col - 1] == self.enermy:
+                if state[row][col - 1] == self.enermy():
                     unknow_post = [(row, col - 1), (row, col + 1)]
                     # r b r
                     # x x x
@@ -316,7 +323,7 @@ class Player:
                 # x x b
                 # x r x
                 # ? x x
-                if state[row - 1][col - 1] == self.enermy:
+                if state[row - 1][col - 1] == self.enermy():
                     if not Left(col - 1):
                         #-------
                         # x x b
@@ -369,7 +376,7 @@ class Player:
                 #| r x x
                 #| b x x
                 #-------
-                if state[row + 1][col] == self.enermy:
+                if state[row + 1][col] == self.enermy():
                     if self.TwoForOne(state, (row + 2, col)):
                         # b x x
                         # r x x
@@ -379,7 +386,7 @@ class Player:
                 #| x r x
                 #| b x x
                 #-------
-                if state[row + 1][col + 1] == self.enermy:
+                if state[row + 1][col + 1] == self.enermy():
                     if self.TwoForOne(state, (row + 2, col + 2)):
                         # x x b
                         # x r x
@@ -389,7 +396,7 @@ class Player:
                 #| x x x
                 #| b r ?
                 #--------
-                if state[row][col + 1] == self.enermy:
+                if state[row][col + 1] == self.enermy():
                     if self.TwoForOne(state, (row, col + 2)):
                         # x x x
                         # x x x
@@ -404,7 +411,7 @@ class Player:
                 # x x x|
                 # x r b|
                 #-------
-                if state[row][col - 1] == self.enermy:
+                if state[row][col - 1] == self.enermy():
                     if self.TwoForOne(state, (row, col - 2)):
                         # x x x
                         # x x x
@@ -414,7 +421,7 @@ class Player:
                 # x r x|
                 # x x b|
                 #-------
-                if state[row + 1][col - 1] == self.enermy:
+                if state[row + 1][col - 1] == self.enermy():
                     if self.TwoForOne(state, (row + 2, col - 2)):
                         # b x x
                         # x r x
@@ -424,7 +431,7 @@ class Player:
                 # x x r|
                 # x x b|
                 #-------
-                if state[row + 1][col] == self.enermy:
+                if state[row + 1][col] == self.enermy():
                     if self.TwoForOne(state, (row + 2, col)):
                         # x x b
                         # x x r
@@ -439,7 +446,7 @@ class Player:
                 # x x x
                 # x * x
                 #------
-                if state[row][col - 1] == self.enermy:
+                if state[row][col - 1] == self.enermy():
                     unknow_post = [(row, col - 1), (row, col + 1)]
                     # x x x
                     # x x x
@@ -458,7 +465,7 @@ class Player:
                 # x r x
                 # x x b
                 #------
-                if state[row + 1][col - 1] == self.enermy:
+                if state[row + 1][col - 1] == self.enermy():
                     if not Left (col - 1):
                         # ? x x
                         # x r x
@@ -505,7 +512,7 @@ class Player:
             #| r x x
             #| b x x
             #| x x x
-            if state[row + 1][col] == self.enermy:
+            if state[row + 1][col] == self.enermy():
                 # Doesn't need to handle Top and Botton b/c if b in 
                 # top or botton function before must handle it
                 unknow_post = [(row + 1,col), (row - 1, col)]
@@ -532,7 +539,7 @@ class Player:
             #| x x x
             #| b r ?
             #| x x x
-            if state[row][col + 1] == self.enermy:
+            if state[row][col + 1] == self.enermy():
                 #| x x x
                 #| b r b
                 #| x x x
@@ -541,7 +548,7 @@ class Player:
             #| b x x
             #| x r x
             #| x x ?
-            if state[row - 1][col + 1] == self.enermy:
+            if state[row - 1][col + 1] == self.enermy():
                 if not Bottom(row - 1):
                     #| b x x
                     #| x r x
@@ -554,7 +561,7 @@ class Player:
             #| b x x
             #| r x x
             #| ? x x
-            if state[row - 1][col] == self.enermy:
+            if state[row - 1][col] == self.enermy():
                 if not Bottom(row - 1):
                     #| b x x
                     #| r x x
@@ -568,7 +575,7 @@ class Player:
             # x x r|
             # x x b|
             # x x x|
-            if state[row + 1][col] == self.enermy:
+            if state[row + 1][col] == self.enermy():
                 # Doesn't need to handle Top and Botton b/c if b in 
                 # top or botton function before must handle it
                 unknow_post = [(row + 1,col), (row - 1, col)]
@@ -585,7 +592,7 @@ class Player:
             # ? x x|
             # x r x|
             # x x b|
-            if state[row - 1][col - 1] == self.enermy:
+            if state[row - 1][col - 1] == self.enermy():
                 if not Top(row + 1):
                     # b x x|
                     # x r x|
@@ -595,7 +602,7 @@ class Player:
             # x x x|
             # b r ?|
             # x x x|
-            if state[row][col + 1] == self.enermy:
+            if state[row][col + 1] == self.enermy():
                 #| x x x
                 #| b r ?
                 #| x x x
@@ -607,7 +614,7 @@ class Player:
             # x x b|
             # x r x|
             # ? x x|
-            if state[row - 1][col - 1] == self.enermy:
+            if state[row - 1][col - 1] == self.enermy():
                 if not Bottom(row - 1):
                     # x x b|
                     # x r x|
@@ -620,7 +627,7 @@ class Player:
             # x x b|
             # x x r|
             # x x ?|
-            if state[row - 1][col] == self.enermy:
+            if state[row - 1][col] == self.enermy():
                 if not Bottom(row - 1):
                     # x x b|
                     # x x r|
