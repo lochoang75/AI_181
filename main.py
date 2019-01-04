@@ -27,9 +27,14 @@ def board_copy(board):
 
 # Student SHOULD implement this function to change current state to new state properly
 def doit(move, state):
-    
-    new_state = board_copy(state)
-    return new_state
+    cur_x = move[0][0]
+    cur_y = move[0][1]
+    new_x = move[1][0]
+    new_y = move[1][1]
+
+    state[new_x][new_y] =  state[cur_x][cur_y]
+    state[cur_x][cur_y] = "."
+    return state
 
 #======================================================================
 Initial_Board = [
