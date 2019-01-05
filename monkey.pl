@@ -1,11 +1,24 @@
 % adapted from Bratko, I. (1986) "Prolog: Programming for Artificial Intelligene." Addison-Wesley. 
-
+% Modify by Hoang Van Loc
 % initial state: Monkey is at door, 
 %                Monkey is on floor, 
 %                Box is at window, 
-%                Monkey doesn't have banana.
+%                Monkey doesnxt have banana,
+%                Banana at the middle
 %
 
+% How to use
+% ?- canget(state(atdoor, onfloor, atwindow, hasnot), Plan).
+% Plan = [walk(atdoor, atwindow), push(atwindow, middle), climb, grasp] 
+% Yes
+
+% ?- canget(state(atwindow, onbox, atwindow, hasnot), Plan ).
+% No
+
+% ?- canget(state(Monkey, onfloor, atwindow, hasnot), Plan).
+% Monkey = atwindow
+% Plan = [push(atwindow, middle), climb, grasp] 
+% Yes
 % prolog structure: structName(val1, val2, ... )
 
 % state(Monkey location in the room, Monkey onbox/onfloor, box location, has/hasnot banana)
@@ -13,13 +26,13 @@
 
 % legal actions
 
-do( state(middle, onbox, middle, hasnot),   % grab banana
+do( state(middle, onbox, middle, hasnot),   % grab banana at the middle
     grab,
     state(middle, onbox, middle, has) ). 
 
-do( state(L, onfloor, middle, Banana),           % climb box can be climb at the middle
+do( state(L, onfloor, L, Banana),           % Climb to the box 
     climb,
-    state(L, onbox, middle, Banana)).
+    state(L, onbox, L, Banana)).
 
 do( state(L, onbox, L, Banana),
 	drop,
@@ -52,16 +65,5 @@ canget(State1, Plan) :-                     % not goal state, do some work to ge
 
 add(X,L,[X|L]).
 
-% ?- canget(state(atdoor, onfloor, atwindow, hasnot), Plan).
-% Plan = [walk(atdoor, atwindow), push(atwindow, middle), climb, grasp] 
-% Yes
-
-% ?- canget(state(atwindow, onbox, atwindow, hasnot), Plan ).
-% No
-
-% ?- canget(state(Monkey, onfloor, atwindow, hasnot), Plan).
-% Monkey = atwindow
-% Plan = [push(atwindow, middle), climb, grasp] 
-% Yes
 
 
