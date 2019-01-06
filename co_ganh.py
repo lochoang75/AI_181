@@ -136,7 +136,7 @@ class Player:
                     elif state[row - 1][col + 1] == self.enermy():
                         self.TwoForOne(state, [row - 1, col + 1])
                     if state[row][col - 1] == self.enermy():
-                        self.OneForTwo(state, [row, col - 1])
+                        self.TwoForOne(state, [row, col - 1])
                     elif state[row -1][col - 1] == self.enermy():
                         self.TwoForOne(state, [row - 1, col - 1])
                 # Left
@@ -194,9 +194,9 @@ class Player:
                 elif state[row + 1][col + 1] == self.enermy():
                     self.TwoForOne(state, [row + 1, col + 1]) 
                 if state[row - 1][col] == self.enermy():
-                    self.TwoForOne(state, [row -1, col])
+                    self.TwoForOne(state, [row - 1, col])
                 elif state[row -1][col + 1] == self.enermy():
-                    self.TwoForOne(state, [row -1, col + 1])
+                    self.TwoForOne(state, [row - 1, col + 1])
                 if state[row][col + 1] == self.enermy():
                     self.TwoForOne(state, [row, col + 1])
             elif Right(col):
@@ -246,7 +246,7 @@ class Player:
                 if state[row][col + 1] == self.enermy():
                     self.TwoForOne(state, [row, col + 1])
                 if state[row][col - 1] == self.enermy():
-                    self.OneForTwo(state, [row, col - 1])
+                    self.TwoForOne(state, [row, col - 1])
                # row under top row 
                 if state[row - 1][col] == self.enermy():
                     self.TwoForOne(state, [row - 1, col])                    
@@ -415,13 +415,13 @@ class Player:
                     self.player_move = [[row + 1, col], [enermy_row, enermy_col]]
                     result = True
                 elif state[row + 1][col + 1] == self.str:
-                    self.player_move = [[row + 1, col - 1], [enermy_row, enermy_col]]
+                    self.player_move = [[row + 1, col + 1], [enermy_row, enermy_col]]
                     result = True
                 elif state[row - 1][col] == self.str:
                     self.player_move = [[row - 1, col], [enermy_row, enermy_col]]
                     result = True
                 elif state[row - 1][col + 1] == self.str:
-                    self.player_move = [[row - 1, col - 1], [enermy_row, enermy_col]]
+                    self.player_move = [[row - 1, col + 1], [enermy_row, enermy_col]]
                     result = True
                 elif state[row][col + 1] == self.str:
                     self.player_move = [[row, col + 1], [enermy_row, enermy_col]]
