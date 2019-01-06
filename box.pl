@@ -3,16 +3,18 @@
 
 % How to use
 % swipl box.pl
-% do[()()]. to excute algorithm
+% do([()()]). to excute algorithm
 % example: do[on(a,table),on(b,a),on(c,b),on(d,c)]
 % listing(on). to check last state of box
 % listing(move). to check all move in last do
+% listing(arm). to show history of arm picking block 
 
 % Initial state
 on(a,table).    
-on(b,table).    
+on(b,a).    
 on(c,table).
 on(d,table).
+arm(empty).
 
 % Put block on other block
 put_on(A,B) :-
@@ -22,8 +24,10 @@ put_on(A,B) :-
      clear(A),
      clear(B),
      retract(on(A,X)),
+     assert(unstack(A,X)),
      assert(on(A,B)),
-     assert(move(A,X,B)).
+     assert(arm(A)),
+     assert(stack(A,B)).
 
 % assume that table always clear
 clear(table).
@@ -43,7 +47,9 @@ r_put_on(A,B) :-
      on(A,X),
      retract(on(A,X)),
      assert(on(A,B)),
-     assert(move(A,X,B)).
+     assert(unstack(A,X)),
+     assert(stack(A,B)),
+     assert(arm(A)).
 
 clear_off(table).    
 clear_off(A) :-      
@@ -56,7 +62,9 @@ clear_off(A) :-
      clear_off(X),      
      retract(on(X,A)),
      assert(on(X,table)),
-     assert(move(X,A,table)).
+     assert(arm(X)),
+     assert(unstack(X,A)),
+     assert(stack(X,table)).
 
 % Do with final state
 do(Glist) :- 
